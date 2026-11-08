@@ -1,0 +1,56 @@
+<title>献立</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap">
+<style>
+/* 配置: 1枚の額。上に見出し(スキル名・日付)、副題、節ごとに題と本文(点線でつなぐ行・文章・棒)。色は柿色を1色だけ使う。形だけの初版で、磨きは後日 */
+:root {
+  --ground: #EFE5DC; --paper: #FFFFFF; --ink: #17191C; --muted: #5A6068; --accent: #A9501D; --line: #C9CDD3;
+  --mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+  --gothic: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ground: #0E1013; --paper: #171A1E; --ink: #E9ECEF; --muted: #A3AAB3; --accent: #F0A36E; --line: #2F343B; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --ground: #0E1013; --paper: #171A1E; --ink: #E9ECEF; --muted: #A3AAB3; --accent: #F0A36E; --line: #2F343B; color-scheme: dark; }
+body {
+  background: var(--ground); color: var(--ink); font-family: var(--gothic);
+  padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px));
+  padding-block: min(28px, 3svh) min(40px, 4svh);
+}
+.sheet { max-width: 720px; margin: 0 auto; background: var(--paper); border: 1px solid var(--ink); box-sizing: border-box;
+  min-height: calc(100svh - min(68px, 7svh)); padding: 1.6em clamp(18px, 5vw, 40px) 1.8em; display: flex; flex-direction: column; justify-content: center; gap: 1.4em;
+  font-size: clamp(12px, 1.9svh, 16px); }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--ink); padding-bottom: .8em; }
+.head h1 { margin: 0; font: 600 1em/1.4 var(--mincho); letter-spacing: .3em; color: var(--accent); }
+.head .date { font-size: .87em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.sub { margin: 0; font: 600 clamp(20px, 5vw, 30px)/1.5 var(--mincho); letter-spacing: .06em; text-wrap: balance; }
+.lead { margin: 0; font-size: 1em; line-height: 1.9; color: var(--muted); }
+.sec { display: grid; gap: .8em; }
+.sec h2 { margin: 0; font: 600 .95em/1.4 var(--mincho); letter-spacing: .2em; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: .35em; }
+.rows { margin: 0; display: grid; gap: .8em; }
+.row { display: grid; grid-template-columns: minmax(3.4em, max-content) 2em minmax(0, 1fr); align-items: baseline; line-height: 1.8; }
+.row dt { font-weight: 500; letter-spacing: .1em; }
+.row .leader { align-self: start; margin-top: .9em; height: 0; border-top: 1px solid var(--ink); }
+.row dd { margin: 0; }
+.para { margin: 0; line-height: 1.9; }
+.bars { display: grid; gap: .8em; margin: 0; padding: 0; list-style: none; }
+.bar { display: grid; grid-template-columns: minmax(5em, max-content) minmax(0, 1fr) minmax(5.5em, max-content); align-items: center; gap: 1em; }
+.bar .track { height: .7em; background: var(--line); }
+.bar .fill { display: block; height: 100%; background: var(--accent); }
+.bar .val { font-variant-numeric: tabular-nums; text-align: right; }
+.note { margin: 0; font-size: .83em; line-height: 1.7; color: var(--muted); }
+
+/* 横長の画面: 幅を広げ、節を2列に並べて1画面に収める。文字と余白は、高さ(svh)から決めた基準の大きさ(em)のまま */
+@media (min-width: 860px) {
+  .sheet { max-width: 1020px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 3em; align-content: center; padding-inline: 2.8em; }
+  .head, .sub, .lead, .note { grid-column: 1 / -1; }
+  .sec { align-content: start; }
+}
+</style>
+<main class="sheet">
+  <header class="head"><h1>献立</h1><span class="date">{{日付}}</span></header>
+  {{副題}}
+  {{一言}}
+  {{節}}
+  {{注記}}
+</main>
